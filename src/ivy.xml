@@ -1,0 +1,9 @@
+<ivy-module version="2.0">
+    <info organisation="home" module="helloworld"/>
+    <dependencies>
+    	<dependency org="org.springframework" name="spring-context" rev="4.2.0.RELEASE"/>
+		<dependency org="org.springframework" name="spring-core" rev="4.2.0.RELEASE"/>
+		<dependency org="org.springframework" name="spring-jdbc" rev="4.2.0.RELEASE"/>
+		<dependency org="mysql" name="mysql-connector-java" rev="5.1.36"/>
+    </dependencies>
+</ivy-module>

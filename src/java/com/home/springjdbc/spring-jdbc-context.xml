@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="dataSource"
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+      p:driverClassName="${jdbc.driverClassName}" 
+      p:url="${jdbc.url}"
+      p:username="${jdbc.username}"
+      p:password="${jdbc.password}"/>
+      
+      <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
+      p:dataSource-ref="dataSource"></bean>
+      
+      <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+      <constructor-arg type="javax.sql.DataSource" ref="dataSource" />
+      </bean>
+      
+      <bean id="selectAllContacts" class="com.home.springjdbc.SelectAllContacts">
+      <constructor-arg type="javax.sql.DataSource" ref="dataSource" />
+      </bean>
+      
+      <bean id="selectContactByFirstName" class="com.home.springjdbc.SelectContactByFirstName">
+      <constructor-arg type="javax.sql.DataSource" ref="dataSource" />
+      </bean>
+      
+      <bean id="updateContact" class="com.home.springjdbc.UpdateContact">
+      <constructor-arg type="javax.sql.DataSource" ref="dataSource" />
+      </bean>
+      
+      <bean id="insertContact" class="com.home.springjdbc.InsertContact">
+      <constructor-arg type="javax.sql.DataSource" ref="dataSource" />
+      </bean>
+      
+      <bean id="contactDao" class="com.home.springjdbc.SpringContactDao"
+       p:jdbcTemplate-ref="jdbcTemplate" 
+       p:namedParameterJdbcTemplate-ref="namedParameterJdbcTemplate"
+       p:selectAllContacts-ref="selectAllContacts"
+       p:selectContactByFirstName-ref="selectContactByFirstName"
+       p:updateContact-ref="updateContact"
+       p:insertContact-ref="insertContact"/>
+      
+
+    <context:property-placeholder location="classpath:com/home/springjdbc/jdbc.properties"/>
+</beans>
